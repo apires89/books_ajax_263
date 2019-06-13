@@ -1,7 +1,26 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require "open-uri"
+require "yaml"
+
+Review.destroy_all
+Book.destroy_all
+
+
+file = "https://raw.githubusercontent.com/rodloboz/lw-fullstack/master/goodreads/data/books.yml"
+sample = YAML.load(open(file).read)
+
+
+puts 'Creating books...'
+books = {}
+sample["books"].each do |book|
+  books[book["slug"]] = Book.create!(title: book["title"],description: book["description"],image_url: book["image_url"])
+end
+
+
+puts 'Creating reviews...'
+sample["reviews"].each do |review|
+  book = books[review["book_slug"]]
+  Review.create!(rating: review["rating"], content: review["content"], book: book)
+end
+
+
+puts 'Finished!'

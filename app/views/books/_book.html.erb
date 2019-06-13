@@ -1,0 +1,30 @@
+<div class="col-xs-12 col-sm-6">
+  <div class="book">
+    <%= link_to book do %>
+      <div class="book-cover" style="background: url(<%= book.image_url %>) center / cover no-repeat;"></div>
+    <% end %>
+    <div class="book-details">
+      <div class="book-title">
+        <%= link_to book.title, book %>
+      </div>
+      <div class="book-rating">
+        <% if book.average_rating.nil? %>
+          <span class="no-rating">not rated</span>
+        <% else %>
+          <p><%= book.average_rating %></p>
+        <% end %>
+        <span class="separator">|</span>
+        <span class="review-count">
+          <% if book.reviews.any? %>
+            <%= link_to pluralize(book.reviews.count, 'review'), book_path(book,anchor: 'reviews')  %>
+          <% else %>
+            <span class="no-rating">no reviews</span>
+          <% end %>
+        </span>
+      </div>
+      <div class="book-description">
+        <%= book.description.html_safe %>
+      </div>
+    </div>
+  </div>
+</div>

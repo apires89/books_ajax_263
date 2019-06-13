@@ -1,0 +1,44 @@
+<section class="book-section">
+  <div class="book-container">
+    <div class="book-heart">
+    </div>
+    <div class="book-cover" style="background: url(<%= @book.image_url %>) center / cover no-repeat;">
+    </div>
+    <div>
+      <div class="book-title">
+        <h1><%= @book.title %></h1>
+      </div>
+      <div class="book-rating">
+        <% if @book.average_rating.nil? %>
+          <span class="no-rating">not rated</span>
+        <% else %>
+          <p><%= @book.average_rating %></p>
+        <% end %>        |
+        <span class="review-count">
+          <% if @book.reviews.any? %>
+            <%= link_to pluralize(@book.reviews.count, 'review'), "#reviews"  %>
+          <% else %>
+            <span class="no-rating">no reviews</span>
+          <% end %>
+        </span>
+      </div>
+      <div class="book-description">
+        <%= @book.description.html_safe %>
+      </div>
+    </div>
+  </div>
+  <div id="reviews"></div>
+</section>
+
+<section class="book-section">
+    <%= render 'reviews/form' %>
+    <h5>Community reviews</h5>
+    <div id="reviews-container">
+      <% if @book.reviews.any? %>
+          <%= render @book.reviews.ordered_by_date %>
+      <% else %>
+        <p>This book doesn't have any reviews yet.</p>
+      <% end %>
+    </div>
+</section>
+
