@@ -7,6 +7,9 @@
       <div class="book-title">
         <%= link_to book.title, book %>
       </div>
+      <div class="destory" data-book-id="<%= book.id %>">
+        <%= link_to "Delete", book, method: :delete, remote: true %>
+      </div>
       <div class="book-rating">
         <% if book.average_rating.nil? %>
           <span class="no-rating">not rated</span>
