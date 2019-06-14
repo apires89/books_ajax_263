@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show]
+  before_action :set_book, only: [:show,:destroy]
 
   def index
     @books = Book.all
@@ -7,6 +7,10 @@ class BooksController < ApplicationController
 
   def show
     @review = Review.new
+  end
+
+  def destroy
+    @book.destroy
   end
 
   private
